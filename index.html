@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nanobot | Modular Researcher Evolution</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --accent: #f97316;
+            --progenitor: #64748b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.05);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 4rem;
+        }
+
+        /* Evolution Header */
+        header {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .lineage-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1.25rem;
+            background: rgba(249, 115, 22, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 99px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 6rem;
+            line-height: 0.95;
+            margin-bottom: 2rem;
+        }
+
+        h1 span {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .lead {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            font-weight: 300;
+        }
+
+        /* Interaction Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+            margin-top: 6rem;
+        }
+
+        .card {
+            grid-column: span 6;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px);
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            background: var(--bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            margin-bottom: 2rem;
+        }
+
+        .icon-svg {
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            width: 24px;
+            height: 24px;
+        }
+
+        /* HR Pipeline Deep-Content */
+        .pipeline-viz {
+            margin-top: 2rem;
+            background: #020617;
+            border-radius: 12px;
+            padding: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border: 1px solid rgba(249, 115, 22, 0.1);
+        }
+
+        .pipeline-step {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .success {
+            color: #10b881;
+        }
+
+        /* Evolution Links */
+        .evo-nav {
+            position: fixed;
+            right: 4rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .nav-dot:hover,
+        .nav-dot.active {
+            background: var(--accent);
+            transform: scale(1.5);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        [data-reveal] {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        [data-reveal].active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        footer {
+            padding: 6rem 0;
+            border-top: 1px solid var(--border);
+            margin-top: 10rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="evo-nav">
+        <a href="../index.html" class="nav-dot" title="Genesis"></a>
+        <div class="nav-dot active" title="Nanobot"></div>
+        <a href="../AI-Agent-NanoClaw/index.html" class="nav-dot" title="NanoClaw"></a>
+        <a href="../AI-Agent-PicoClaw/index.html" class="nav-dot" title="PicoClaw"></a>
+        <a href="../AI-Agent-ZeroClaw/index.html" class="nav-dot" title="ZeroClaw"></a>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="lineage-badge" data-reveal>
+                <svg class="icon-svg" style="width:14px; height:14px;">
+                    <path d="M12 2v20" />
+                    <path d="m17 5-5-3-5 3" />
+                    <path d="M2 12h20" />
+                </svg>
+                EVO-01: THE RESEARCHER
+            </div>
+            <h1 data-reveal style="transition-delay: 0.1s">Nanobot:<br>Modular <span>Depth.</span></h1>
+            <p class="lead" data-reveal style="transition-delay: 0.2s">The first speciation from the OpenClaw mainhead.
+                Optimized for high-fidelity research and personal synchronization.</p>
+        </header>
+
+        <div class="grid">
+            <!-- Lean Engine Logic - Deep Content -->
+            <div class="card" style="grid-column: span 8;" data-reveal>
+                <div class="icon-box"><svg class="icon-svg">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg></div>
+                <h3>Lean Engine Logic</h3>
+                <p style="color: var(--text-muted); margin-top: 1rem;">Nanobot consists of just ~4,000 lines of core
+                    agent code, making it 99% smaller than the original progenitor.</p>
+
+                <div class="pipeline-viz">
+                    <div class="pipeline-step"><span class="success">[FILE]</span> agent/loop.py - Core Runtime</div>
+                    <div class="pipeline-step"><span class="success">[FILE]</span> agent/memory.py - Persistence</div>
+                    <div class="pipeline-step"><span class="success">[FILE]</span> services/nanobot-gateway.service
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Metrics - Deep Content -->
+            <div class="card" style="grid-column: span 4;" data-reveal style="transition-delay: 0.1s">
+                <div class="icon-box"><svg class="icon-svg">
+                        <path d="M12 20v-6M6 20V10M18 20V4" />
+                    </svg></div>
+                <h3>Project Metrics</h3>
+                <p style="color: var(--text-muted); margin-top: 1rem;">Ultra-lightweight performance benchmarks from the
+                    HKUDS repository.</p>
+                <div style="margin-top: 2rem; border-top: 1px dashed var(--border); padding-top: 1rem;">
+                    <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent);">4,000</div>
+                    <div style="font-size: 0.6rem; color: var(--text-muted);">CORE LOGIC LINES</div>
+                </div>
+            </div>
+
+            <!-- Evolution Log -->
+            <div class="card" style="grid-column: span 12;" data-reveal>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3>Speciation Summary</h3>
+                        <p style="color: var(--text-muted); margin-top: 0.5rem;">Born from OpenClaw v1.4 to solve
+                            per-project depth constraints.</p>
+                    </div>
+                    <a href="README.md"
+                        style="font-size: 0.75rem; font-weight: 800; color: var(--accent); text-transform: uppercase;">View
+                        Orig_Repo →</a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em;">
+                <span>NANOBOT SYSTEM • SPECIATION V2.2</span>
+                <span>MK-KNIGHT23 • CLAW_SECURE</span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+    </script>
+</body>
+
+</html>
