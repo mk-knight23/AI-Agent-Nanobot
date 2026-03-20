@@ -231,6 +231,59 @@
             padding: 0.25rem 0.7rem; border-radius: 6px;
         }
         .workflow-item.is-new .workflow-name::after { content: " ✦"; color: var(--accent); }
+
+        /* Architecture Grid Styles */
+        .architecture-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .arch-box {
+            flex: 1;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            text-align: center;
+        }
+        .arch-box.highlight {
+            border-color: var(--accent);
+            background: rgba(249, 115, 22, 0.05);
+        }
+        .arch-title {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+        .arch-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+        .arch-list span {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+        }
+        .arch-connector {
+            font-size: 1.5rem;
+            color: var(--border);
+            user-select: none;
+        }
+
+        @media (max-width: 768px) {
+            .architecture-grid { flex-direction: column; }
+            .arch-connector { transform: rotate(90deg); margin: 0.5rem 0; }
+            h1 { font-size: 3.5rem; }
+            .container { padding: 0 2rem; }
+        }
     </style>
 </head>
 
@@ -294,8 +347,60 @@
                 </div>
             </div>
 
-            <!-- Evolution Log -->
-            <div class="card" style="grid-column: span 12;" data-reveal>
+        <!-- Agent Architecture -->
+        <div class="upgrade-section">
+            <div class="section-label" data-reveal>Agent Architecture · Ultra-Lightweight Core</div>
+            <div class="card" style="grid-column: span 12; background: #020617;" data-reveal>
+                <div class="architecture-grid">
+                    <div class="arch-box">
+                        <div class="arch-title">Input Channels</div>
+                        <div class="arch-list">
+                            <span>Telegram</span><span>Discord</span><span>Slack</span>
+                            <span>WhatsApp</span><span>Email</span><span>Signal</span>
+                        </div>
+                    </div>
+                    <div class="arch-connector">→</div>
+                    <div class="arch-box highlight">
+                        <div class="arch-title">Nanobot Core</div>
+                        <div class="arch-list">
+                            <span>Message Router</span>
+                            <span>Agent Loop (loop.py)</span>
+                            <span>Memory Manager</span>
+                            <span>Heartbeat v0.1.4</span>
+                        </div>
+                    </div>
+                    <div class="arch-connector">→</div>
+                    <div class="arch-box">
+                        <div class="arch-title">Output/Tools</div>
+                        <div class="arch-list">
+                            <span>22+ LLM Providers</span>
+                            <span>MCP Toolkits</span>
+                            <span>Supabase / Notion</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Use Case Hub -->
+        <div class="upgrade-section">
+            <div class="section-label" data-reveal>Use Case Hub · Real-world Deployment</div>
+            <div class="grid" style="margin-top: 0;">
+                <div class="card" style="grid-column: span 6;" data-reveal>
+                    <div class="icon-box"><svg class="icon-svg"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg></div>
+                    <h3>Personal Finance Monitor</h3>
+                    <p class="skill-desc">Autonomous expense tracking via Telegram/WhatsApp. Categories spending from receipt photos and transaction logs with high accuracy.</p>
+                </div>
+                <div class="card" style="grid-column: span 6;" data-reveal>
+                    <div class="icon-box"><svg class="icon-svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg></div>
+                    <h3>Discord Code Assistant</h3>
+                    <p class="skill-desc">Provides coding help, reviews snippets, and generates boilerplate directly in Discord threads using the full skill library.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Evolution Log -->
+        <div class="card" style="grid-column: span 12; margin-top: 4rem;" data-reveal>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <h3>Speciation Summary</h3>
