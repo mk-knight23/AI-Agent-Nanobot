@@ -4,473 +4,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nanobot | Modular Researcher Evolution</title>
+    <title>Nanobot | The Deep Researcher</title>
+    <meta name="description"
+        content="Nanobot is the ultra-lightweight Python-native evolution of the AI-CLAW-ECOSYSTEM, focused on modular lab automation and deep research synthesis.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
         rel="stylesheet">
 
     <style>
         :root {
-            --bg: #0f172a;
-            --surface: #1e293b;
-            --accent: #f97316;
-            --progenitor: #64748b;
-            --text-main: #f1f5f9;
+            --bg-primary: #020617;
+            --bg-secondary: #0f172a;
+            --accent: #f97316; /* Python/Research Accent */
+            --accent-glow: rgba(249, 115, 22, 0.4);
+            --text-primary: #f8fafc;
             --text-muted: #94a3b8;
-            --border: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(249, 115, 22, 0.3);
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --radius-md: 12px;
+            --radius-lg: 24px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
 
         body {
-            background-color: var(--bg);
-            color: var(--text-main);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
             line-height: 1.6;
-            scroll-behavior: smooth;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 4rem;
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; position: relative; }
+
+        /* Ambient Background */
+        .matrix-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(15, 23, 42, 0.8) 0%, rgba(2, 6, 23, 1) 100%);
+            z-index: -1;
         }
 
-        /* Evolution Header */
-        header {
-            padding: 8rem 0;
-            position: relative;
+        .grid-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(249, 115, 22, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(249, 115, 22, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px; z-index: -1;
+            mask-image: radial-gradient(ellipse at center, black, transparent 90%);
         }
 
-        .lineage-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.5rem 1.25rem;
-            background: rgba(249, 115, 22, 0.1);
-            border: 1px solid var(--accent);
-            border-radius: 99px;
-            font-size: 0.65rem;
-            font-weight: 800;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            margin-bottom: 2rem;
+        /* Navigation */
+        .sticky-nav {
+            position: sticky; top: 0; width: 100%; background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+            z-index: 1000; padding: 1rem 0;
         }
 
-        h1 {
-            font-family: 'Crimson Pro', serif;
-            font-size: 6rem;
-            line-height: 0.95;
-            margin-bottom: 2rem;
+        .nav-container {
+            max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+            display: flex; justify-content: space-between; align-items: center;
         }
 
-        h1 span {
-            color: var(--accent);
-            font-style: italic;
+        .nav-logo {
+            font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.1rem;
+            color: var(--text-primary); text-decoration: none;
         }
 
-        .lead {
-            font-size: 1.5rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            font-weight: 300;
+        .nav-logo span { color: var(--accent); }
+
+        .nav-links { display: flex; gap: 1.5rem; }
+
+        .nav-links a {
+            color: var(--text-muted); text-decoration: none; font-size: 0.85rem;
+            font-weight: 500; transition: var(--transition); font-family: 'JetBrains Mono', monospace;
         }
 
-        /* Interaction Grid */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 2rem;
-            margin-top: 6rem;
+        .nav-links a:hover { color: var(--accent); }
+
+        /* Hero Section */
+        .hero { padding: 8rem 0 4rem; text-align: left; }
+
+        .hero-badge {
+            display: inline-flex; align-items: center; padding: 0.5rem 1.25rem;
+            background: rgba(249, 115, 22, 0.05); border: 1px solid rgba(249, 115, 22, 0.15);
+            border-radius: 99px; font-size: 0.7rem; font-weight: 600; color: var(--accent);
+            text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 2.5rem;
         }
+
+        .hero-title {
+            font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 800; line-height: 1.05;
+            letter-spacing: -0.04em; margin-bottom: 2rem;
+        }
+
+        .hero-title span { color: var(--accent); }
+
+        .hero-desc { font-size: 1.25rem; color: var(--text-muted); max-width: 700px; margin-bottom: 3rem; }
+
+        /* Section Layouts */
+        .section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
+
+        .section-tag {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent);
+            text-transform: uppercase; letter-spacing: 0.4em; display: block; margin-bottom: 1rem;
+        }
+
+        h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem; letter-spacing: -0.02em; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
 
         .card {
-            grid-column: span 6;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 3rem;
-            transition: var(--transition);
+            background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 3rem; backdrop-filter: blur(8px);
         }
 
-        .card:hover {
-            border-color: var(--accent);
-            transform: translateY(-8px);
+        /* Architect Style */
+        .architect-card { display: flex; justify-content: space-between; align-items: center; gap: 4rem; }
+
+        .stat-item { text-align: left; }
+
+        .stat-value { font-size: 2.5rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 0.25rem; }
+
+        .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 600; }
+
+        /* Technical Specs */
+        .tech-list { list-style: none; margin-top: 2rem; }
+
+        .tech-item {
+            display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
         }
 
-        .icon-box {
-            width: 48px;
-            height: 48px;
-            background: var(--bg);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent);
-            margin-bottom: 2rem;
-        }
+        .tech-item::before { content: "→"; color: var(--accent); }
 
-        .icon-svg {
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-            width: 24px;
-            height: 24px;
-        }
+        /* Animations */
+        [data-reveal] { opacity: 0; transform: translateY(20px); transition: var(--transition); }
+        [data-reveal].active { opacity: 1; transform: translateY(0); }
 
-        /* HR Pipeline Deep-Content */
-        .pipeline-viz {
-            margin-top: 2rem;
-            background: #020617;
-            border-radius: 12px;
-            padding: 2rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            border: 1px solid rgba(249, 115, 22, 0.1);
-        }
+        footer { padding: 4rem 0; text-align: center; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; }
 
-        .pipeline-step {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .success {
-            color: #10b881;
-        }
-
-        /* Evolution Links */
-        .evo-nav {
-            position: fixed;
-            right: 4rem;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 100;
-        }
-
-        .nav-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--text-muted);
-            border-radius: 50%;
-            transition: var(--transition);
-        }
-
-        .nav-dot:hover,
-        .nav-dot.active {
-            background: var(--accent);
-            transform: scale(1.5);
-            box-shadow: 0 0 10px var(--accent);
-        }
-
-        [data-reveal] {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: var(--transition);
-        }
-
-        [data-reveal].active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        footer {
-            padding: 6rem 0;
-            border-top: 1px solid var(--border);
-            margin-top: 10rem;
-        }
-
-        /* Skills & Workflows — Upgrade Sections */
-        .upgrade-section { margin-top: 8rem; }
-        .section-label {
-            font-size: 0.65rem; font-weight: 800; color: var(--accent);
-            text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 2.5rem;
-            display: flex; align-items: center; gap: 1rem;
-        }
-        .section-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
-            gap: 1rem;
-        }
-        .skill-chip {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 14px; padding: 1.25rem 1.5rem; transition: var(--transition);
-        }
-        .skill-chip:hover { border-color: var(--accent); transform: translateY(-4px); }
-        .skill-name { font-size: 0.82rem; font-weight: 700; color: var(--text-main); }
-        .skill-desc { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.3rem; line-height: 1.4; }
-        .skill-chip.is-new { border-color: rgba(249,115,22,0.4); }
-        .skill-chip.is-new .skill-name::after { content: " ✦"; color: var(--accent); font-size: 0.6rem; }
-        .workflow-list { display: flex; flex-direction: column; gap: 0.6rem; }
-        .workflow-item {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem 1.5rem; border-radius: 12px;
-            background: var(--surface); border: 1px solid var(--border); transition: var(--transition);
-        }
-        .workflow-item:hover { border-color: rgba(249,115,22,0.35); }
-        .workflow-name { font-size: 0.82rem; font-weight: 700; color: var(--text-main); }
-        .workflow-trigger {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
-            color: var(--accent); background: rgba(249,115,22,0.1);
-            padding: 0.25rem 0.7rem; border-radius: 6px;
-        }
-        .workflow-item.is-new .workflow-name::after { content: " ✦"; color: var(--accent); }
-
-        /* Architecture Grid Styles */
-        .architecture-grid {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-        }
-        .arch-box {
-            flex: 1;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            text-align: center;
-        }
-        .arch-box.highlight {
-            border-color: var(--accent);
-            background: rgba(249, 115, 22, 0.05);
-        }
-        .arch-title {
-            font-size: 0.75rem;
-            font-weight: 800;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1rem;
-        }
-        .arch-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-        .arch-list span {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 0.3rem 0.6rem;
-            border-radius: 6px;
-        }
-        .arch-connector {
-            font-size: 1.5rem;
-            color: var(--border);
-            user-select: none;
-        }
-
-        @media (max-width: 768px) {
-            .architecture-grid { flex-direction: column; }
-            .arch-connector { transform: rotate(90deg); margin: 0.5rem 0; }
-            h1 { font-size: 3.5rem; }
-            .container { padding: 0 2rem; }
+        @media (max-width: 1024px) {
+            .grid-2 { grid-template-columns: 1fr; gap: 3rem; }
+            .architect-card { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 
 <body>
+    <div class="matrix-bg"></div>
+    <div class="grid-overlay"></div>
 
-    <div class="evo-nav">
-        <a href="https://mk-knight23.github.io/AI-CLAW-ECOSYSTEM/" class="nav-dot" title="Genesis"></a>
-        <div class="nav-dot active" title="Nanobot"></div>
-        <a href="https://mk-knight23.github.io/AI-Agent-NanoClaw/" class="nav-dot" title="NanoClaw"></a>
-        <a href="https://mk-knight23.github.io/AI-Agent-PicoClaw/" class="nav-dot" title="PicoClaw"></a>
-        <a href="https://mk-knight23.github.io/AI-Agent-ZeroClaw/" class="nav-dot" title="ZeroClaw"></a>
-    </div>
+    <nav class="sticky-nav">
+        <div class="nav-container">
+            <a href="https://mk-knight23.github.io/AI-CLAW-ECOSYSTEM/" class="nav-logo">AI-<span>CLAW</span>-ECOSYSTEM</a>
+            <div class="nav-links">
+                <a href="https://mk-knight23.github.io/AI-CLAW-ECOSYSTEM/">Hub</a>
+                <a href="https://mk-knight23.github.io/AI-Agent-OpenClaw/">OpenClaw</a>
+                <a href="https://mk-knight23.github.io/AI-Agent-ZeroClaw/">ZeroClaw</a>
+                <a href="https://mk-knight23.github.io/AI-Agent-NanoClaw/">NanoClaw</a>
+                <a href="https://mk-knight23.github.io/AI-Agent-PicoClaw/">PicoClaw</a>
+                <a href="https://mk-knight23.github.io/AI-Agent-Nanobot/">Nanobot</a>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
-        <header>
-            <div class="lineage-badge" data-reveal>
-                <svg class="icon-svg" style="width:14px; height:14px;">
-                    <path d="M12 2v20" />
-                    <path d="m17 5-5-3-5 3" />
-                    <path d="M2 12h20" />
-                </svg>
-                EVO-01: THE RESEARCHER
-            </div>
-            <h1 data-reveal style="transition-delay: 0.1s">Nanobot:<br>Modular <span>Depth.</span></h1>
-            <p class="lead" data-reveal style="transition-delay: 0.2s">The first speciation from the OpenClaw mainhead.
-                Optimized for high-fidelity research and personal synchronization.</p>
+        <header class="hero">
+            <div class="hero-badge" data-reveal>Deep Researcher / EVO-01</div>
+            <h1 class="hero-title" data-reveal style="transition-delay: 0.1s">
+                Modular<br><span>Depth.</span>
+            </h1>
+            <p class="hero-desc" data-reveal style="transition-delay: 0.2s">
+                Nanobot is the ultra-lightweight Python-native evolution optimized for high-fidelity research, personal synchronization, and modular lab automation.
+            </p>
         </header>
 
-        <div class="grid">
-            <!-- Lean Engine Logic - Deep Content -->
-            <div class="card" style="grid-column: span 8;" data-reveal>
-                <div class="icon-box"><svg class="icon-svg">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                        <circle cx="9" cy="7" r="4" />
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                    </svg></div>
-                <h3>Lean Engine Logic</h3>
-                <p style="color: var(--text-muted); margin-top: 1rem;">Nanobot consists of just ~4,000 lines of core
-                    agent code, making it 99% smaller than the original progenitor.</p>
-
-                <div class="pipeline-viz">
-                    <div class="pipeline-step"><span class="success">[FILE]</span> agent/loop.py - Core Runtime</div>
-                    <div class="pipeline-step"><span class="success">[FILE]</span> agent/memory.py - Persistence</div>
-                    <div class="pipeline-step"><span class="success">[FILE]</span> services/nanobot-gateway.service
+        <section class="section">
+            <div class="card architect-card" data-reveal>
+                <div class="architect-info">
+                    <span class="section-tag">THE ARCHITECT</span>
+                    <h2>Kazi Musharraf</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">AI Engineer & Research Lead.</p>
+                    <p>Nanobot is Kazi's "Insight Agent," utilized within the 134-agent RALPH system to perform deep technical synthesis and manage automated knowledge flows across his project portfolio.</p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div class="stat-item">
+                        <span class="stat-value">4k</span>
+                        <span class="stat-label">Lines of Code</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">99%</span>
+                        <span class="stat-label">Leaner Core</span>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Project Metrics - Deep Content -->
-            <div class="card" style="grid-column: span 4;" data-reveal style="transition-delay: 0.1s">
-                <div class="icon-box"><svg class="icon-svg">
-                        <path d="M12 20v-6M6 20V10M18 20V4" />
-                    </svg></div>
-                <h3>Project Metrics</h3>
-                <p style="color: var(--text-muted); margin-top: 1rem;">Ultra-lightweight performance benchmarks from the
-                    HKUDS repository.</p>
-                <div style="margin-top: 2rem; border-top: 1px dashed var(--border); padding-top: 1rem;">
-                    <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent);">4,000</div>
-                    <div style="font-size: 0.6rem; color: var(--text-muted);">CORE LOGIC LINES</div>
+        <section class="section">
+            <div class="grid-2">
+                <div data-reveal>
+                    <span class="section-tag">TECHNICAL DOCUMENTATION</span>
+                    <h2>Python-Native Synthesis</h2>
+                    <p style="color: var(--text-muted);">Built for modularity and rapid integration with the latest scientific and AI toolkits.</p>
+                    <ul class="tech-list">
+                        <li class="tech-item">Asynchronous Agent Loops</li>
+                        <li class="tech-item">Modular Tool-Calling Architecture</li>
+                        <li class="tech-item">Dynamic Memory Persistence</li>
+                        <li class="tech-item">OpenClaw REST Integration</li>
+                    </ul>
+                </div>
+                <div class="card" data-reveal style="transition-delay: 0.1s">
+                    <h3 style="margin-bottom: 1rem; color: var(--accent);">Research Integration</h3>
+                    <p>Nanobot connects directly to the OpenClaw gateway, serving as the primary node for information retrieval. It synthesizes complex web and local data into actionable architectural insights for the Hub.</p>
                 </div>
             </div>
+        </section>
 
-        <!-- Agent Architecture -->
-        <div class="upgrade-section">
-            <div class="section-label" data-reveal>Agent Architecture · Ultra-Lightweight Core</div>
-            <div class="card" style="grid-column: span 12; background: #020617;" data-reveal>
-                <div class="architecture-grid">
-                    <div class="arch-box">
-                        <div class="arch-title">Input Channels</div>
-                        <div class="arch-list">
-                            <span>Telegram</span><span>Discord</span><span>Slack</span>
-                            <span>WhatsApp</span><span>Email</span><span>Signal</span>
-                        </div>
-                    </div>
-                    <div class="arch-connector">→</div>
-                    <div class="arch-box highlight">
-                        <div class="arch-title">Nanobot Core</div>
-                        <div class="arch-list">
-                            <span>Message Router</span>
-                            <span>Agent Loop (loop.py)</span>
-                            <span>Memory Manager</span>
-                            <span>Heartbeat v0.1.4</span>
-                        </div>
-                    </div>
-                    <div class="arch-connector">→</div>
-                    <div class="arch-box">
-                        <div class="arch-title">Output/Tools</div>
-                        <div class="arch-list">
-                            <span>22+ LLM Providers</span>
-                            <span>MCP Toolkits</span>
-                            <span>Supabase / Notion</span>
-                        </div>
-                    </div>
+        <section class="section">
+            <div class="grid-2">
+                <div class="card" data-reveal>
+                    <h3 style="margin-bottom: 1rem; color: var(--accent);">Lab Automation</h3>
+                    <p>Nanobot autonomously synchronizes research artifacts across multiple platforms (Notion, Obsidian, Slack), ensuring that the entire matrix has access to the latest technical discoveries.</p>
+                </div>
+                <div data-reveal style="transition-delay: 0.1s">
+                    <span class="section-tag">REAL-WORLD AUTOMATION</span>
+                    <h2>Lab Research Sync</h2>
+                    <p>In Kazi's production environment, Nanobot monitors technical whitepapers and repository updates, automatically generating summaries and syncing them to his 134-agent knowledge base.</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Use Case Hub -->
-        <div class="upgrade-section">
-            <div class="section-label" data-reveal>Use Case Hub · Real-world Deployment</div>
-            <div class="grid" style="margin-top: 0;">
-                <div class="card" style="grid-column: span 6;" data-reveal>
-                    <div class="icon-box"><svg class="icon-svg"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg></div>
-                    <h3>Personal Finance Monitor</h3>
-                    <p class="skill-desc">Autonomous expense tracking via Telegram/WhatsApp. Categories spending from receipt photos and transaction logs with high accuracy.</p>
-                </div>
-                <div class="card" style="grid-column: span 6;" data-reveal>
-                    <div class="icon-box"><svg class="icon-svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg></div>
-                    <h3>Discord Code Assistant</h3>
-                    <p class="skill-desc">Provides coding help, reviews snippets, and generates boilerplate directly in Discord threads using the full skill library.</p>
-                </div>
+        <section class="section" style="border: none;">
+            <div style="text-align: center;" data-reveal>
+                <span class="section-tag">THE STORY</span>
+                <h2>The Depth of the Matrix</h2>
+                <p style="max-width: 800px; margin: 0 auto; color: var(--text-muted);">
+                    Nanobot was the first speciation from the OpenClaw lineage. It was born to solve the problem of information density—providing a dedicated, hyper-focused intelligence that ensures the orchestrated matrix is always informed and evolving.
+                </p>
             </div>
-        </div>
-
-        <!-- Evolution Log -->
-        <div class="card" style="grid-column: span 12; margin-top: 4rem;" data-reveal>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <h3>Speciation Summary</h3>
-                        <p style="color: var(--text-muted); margin-top: 0.5rem;">Born from OpenClaw v1.4 to solve
-                            per-project depth constraints.</p>
-                    </div>
-                    <a href="README.md"
-                        style="font-size: 0.75rem; font-weight: 800; color: var(--accent); text-transform: uppercase;">View
-                        Orig_Repo →</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Skills Library -->
-        <div class="upgrade-section">
-            <div class="section-label" data-reveal>Skills Library · 14 Active</div>
-            <div class="skills-grid" data-reveal>
-                <div class="skill-chip"><div class="skill-name">api-tester</div><div class="skill-desc">Auto-generates test suites from OpenAPI specs</div></div>
-                <div class="skill-chip"><div class="skill-name">code-reviewer</div><div class="skill-desc">ruff + mypy + bandit + AI review</div></div>
-                <div class="skill-chip"><div class="skill-name">data-pipeline</div><div class="skill-desc">CSV/JSON/Parquet ETL with Claude transforms</div></div>
-                <div class="skill-chip"><div class="skill-name">doc-generator</div><div class="skill-desc">Full Sphinx/MkDocs docs from source code</div></div>
-                <div class="skill-chip"><div class="skill-name">git-automator</div><div class="skill-desc">PRs, commit msgs, changelogs from git history</div></div>
-                <div class="skill-chip"><div class="skill-name">notion-sync</div><div class="skill-desc">Task &amp; note management in Notion</div></div>
-                <div class="skill-chip"><div class="skill-name">web-searcher</div><div class="skill-desc">Brave Search &amp; live web analysis</div></div>
-                <div class="skill-chip"><div class="skill-name">add-telegram</div><div class="skill-desc">Telegram channel integration</div></div>
-                <div class="skill-chip"><div class="skill-name">add-gmail</div><div class="skill-desc">Gmail send/receive integration</div></div>
-                <div class="skill-chip"><div class="skill-name">add-slack</div><div class="skill-desc">Slack workspace integration</div></div>
-                <div class="skill-chip"><div class="skill-name">add-supabase</div><div class="skill-desc">Supabase persistence + real-time</div></div>
-                <div class="skill-chip"><div class="skill-name">add-obsidian</div><div class="skill-desc">Obsidian vault sync</div></div>
-                <div class="skill-chip is-new"><div class="skill-name">deploy-everywhere</div><div class="skill-desc">Railway, Fly, Lambda, Docker — one command</div></div>
-                <div class="skill-chip is-new"><div class="skill-name">batch-processor</div><div class="skill-desc">Parallel asyncio Claude processing at scale</div></div>
-            </div>
-        </div>
-
-        <!-- Workflows -->
-        <div class="upgrade-section">
-            <div class="section-label" data-reveal>Workflows · 11 Active</div>
-            <div class="workflow-list" data-reveal>
-                <div class="workflow-item"><span class="workflow-name">swarm-orchestration</span><span class="workflow-trigger">@Nanobot swarm</span></div>
-                <div class="workflow-item"><span class="workflow-name">hr-campaign</span><span class="workflow-trigger">MON 8AM</span></div>
-                <div class="workflow-item"><span class="workflow-name">daily-github-digest</span><span class="workflow-trigger">DAILY 7AM</span></div>
-                <div class="workflow-item"><span class="workflow-name">monday-briefing</span><span class="workflow-trigger">MON 9AM</span></div>
-                <div class="workflow-item"><span class="workflow-name">friday-review</span><span class="workflow-trigger">FRI 5PM</span></div>
-                <div class="workflow-item"><span class="workflow-name">mcp-tool-chain</span><span class="workflow-trigger">ON DEMAND</span></div>
-                <div class="workflow-item"><span class="workflow-name">memory-optimization</span><span class="workflow-trigger">WEEKLY</span></div>
-                <div class="workflow-item"><span class="workflow-name">multi-channel-bot</span><span class="workflow-trigger">ALWAYS ON</span></div>
-                <div class="workflow-item"><span class="workflow-name">clawwork-coworker</span><span class="workflow-trigger">ON DEMAND</span></div>
-                <div class="workflow-item is-new"><span class="workflow-name">repository-upgrade-cycle</span><span class="workflow-trigger">SUN 2AM</span></div>
-                <div class="workflow-item is-new"><span class="workflow-name">ci-security-gate</span><span class="workflow-trigger">EVERY PR</span></div>
-            </div>
-        </div>
+        </section>
 
         <footer>
-            <div
-                style="display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em;">
-                <span>NANOBOT SYSTEM • SPECIATION V2.3 • 14 SKILLS • 11 WORKFLOWS</span>
-                <span>MK-KNIGHT23 • CLAW_SECURE</span>
-            </div>
+            AUTHORIZED BY KAZI MUSHARRAF • NANOBOT V2.3 • © 2025
         </footer>
     </div>
 
     <script>
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('active');
             });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
     </script>
 </body>
